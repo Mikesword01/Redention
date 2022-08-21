@@ -9,7 +9,7 @@ public class Bullet : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-         
+
     }
 
     // Update is called once per frame
@@ -17,22 +17,26 @@ public class Bullet : MonoBehaviour
     {
         if (flipX == true)
         {
-            this.transform.Translate(-5 * speed * Time.deltaTime,0,0);
+            this.transform.Translate(-5 * speed * Time.deltaTime, 0, 0);
 
         }
         else if (flipX == false)
         {
-            this.transform.Translate(5 * speed * Time.deltaTime,0,0);
+            this.transform.Translate(5 * speed * Time.deltaTime, 0, 0);
 
         }
 
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Enemy"))
+        if (!collision.CompareTag("Player"))
         {
-            Debug.Log("hit");
-            collision.GetComponent<EnemyIA>().Damage();
+
+            if (collision.CompareTag("Enemy"))
+            {
+                Debug.Log("hit");
+                collision.GetComponent<EnemyIA>().Damage();
+            }
             Destroy(this.gameObject);
         }
     }
