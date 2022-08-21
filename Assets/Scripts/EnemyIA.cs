@@ -81,8 +81,15 @@ public class EnemyIA : MonoBehaviour
         }
         else
         {
-
+            
+            
             var disp = Mathf.Abs(this.transform.position.x - balizas[i].transform.position.x);
+            var deltah = this.transform.GetChild(1).transform.position.y - balizas[i].position.y;
+            Debug.Log(deltah + " :delta y");
+            if (Mathf.Abs(deltah) > 1)
+            {
+                Damage(9999);
+            }
             //Debug.Log(disp);
             if (canMove == false)
             {
@@ -127,10 +134,10 @@ public class EnemyIA : MonoBehaviour
 
 
     }
-    internal void Damage()
+    internal void Damage(int a)
     {
-        health--;
-        if (health == 0)
+        health-=a;
+        if (health <= 0)
         {
             death = true;
 
