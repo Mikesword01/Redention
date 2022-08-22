@@ -13,6 +13,7 @@ public class EnemyIA : MonoBehaviour
     bool canMove = false;
     bool death = false;
     int i;
+    bool canJump = true;
 
 
     // Start is called before the first frame update
@@ -86,9 +87,12 @@ public class EnemyIA : MonoBehaviour
             var disp = Mathf.Abs(this.transform.position.x - balizas[i].transform.position.x);
             var deltah = this.transform.GetChild(1).transform.position.y - balizas[i].position.y;
             Debug.Log(deltah + " :delta y");
-            if (Mathf.Abs(deltah) > 1)
+            if (Mathf.Abs(deltah) > 1 && canJump == true)
             {
-                Damage(9999);
+                //Damage(9999);
+                canJump = false;
+                this.gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(0,11.5f),ForceMode2D.Impulse);
+                StartCoroutine(JumpCooldownCoRoutine());
             }
             //Debug.Log(disp);
             if (canMove == false)
@@ -146,6 +150,11 @@ public class EnemyIA : MonoBehaviour
 
 
         }
+    }
+    IEnumerator JumpCooldownCoRoutine()
+    {
+        yield return new WaitForSeconds(5);
+        canJump = true;
     }
     IEnumerator BalizeCoolDownCoRoutine(int cooldown)
     {
