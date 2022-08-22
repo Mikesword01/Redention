@@ -11,9 +11,11 @@ public class EnemyIA : MonoBehaviour
     public Transform[] balizas = new Transform[2];
     SpriteRenderer spriteRenderer;
     bool canMove = false;
+    bool moveafterjump = true;
     bool death = false;
     int i;
     bool canJump = true;
+    public LayerMask mask;
 
 
     // Start is called before the first frame update
@@ -82,17 +84,21 @@ public class EnemyIA : MonoBehaviour
         }
         else
         {
+
             
-            
+
             var disp = Mathf.Abs(this.transform.position.x - balizas[i].transform.position.x);
-            var deltah = this.transform.GetChild(1).transform.position.y - balizas[i].position.y;
+            var deltah = this.transform.GetChild(1).transform.position.y - (balizas[i].position.y+0.45f);
             Debug.Log(deltah + " :delta y");
-            if (Mathf.Abs(deltah) > 1 && canJump == true)
+            if (Mathf.Abs(deltah) > 0.5 && canJump == true )
             {
                 //Damage(9999);
+                
                 canJump = false;
+                moveafterjump = false;
                 this.gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(0,11.5f),ForceMode2D.Impulse);
                 StartCoroutine(JumpCooldownCoRoutine());
+                StartCoroutine(MoveAgainAfterJumpCoRoutine());
             }
             //Debug.Log(disp);
             if (canMove == false)
@@ -100,7 +106,7 @@ public class EnemyIA : MonoBehaviour
                 StartCoroutine(BalizeCoolDownCoRoutine(1));
             }
 
-            if (canMove == true)
+            if (canMove == true )
             {
 
                 if (i == 0)
@@ -111,7 +117,7 @@ public class EnemyIA : MonoBehaviour
                 {
                     spriteRenderer.flipX = false;
                 }
-                this.transform.position = Vector2.MoveTowards(this.transform.position, new Vector2(balizas[i].transform.position.x, this.transform.position.y), 0.01f);
+                if (moveafterjump == true) { this.transform.position = Vector2.MoveTowards(this.transform.position, new Vector2(balizas[i].transform.position.x, this.transform.position.y), 0.01f); }
                 if (disp < 1)
                 {
                     Debug.Log("arrive");
@@ -153,8 +159,13 @@ public class EnemyIA : MonoBehaviour
     }
     IEnumerator JumpCooldownCoRoutine()
     {
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(2.5f);
         canJump = true;
+    }
+    IEnumerator MoveAgainAfterJumpCoRoutine()
+    {
+        yield return new WaitForSeconds(0.5f);
+        moveafterjump = true;
     }
     IEnumerator BalizeCoolDownCoRoutine(int cooldown)
     {
