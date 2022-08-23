@@ -24,7 +24,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5006427763990865676}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.096, y: -0.265, z: 0}
+  m_LocalPosition: {x: -0.069, y: -0.474, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -167,6 +167,10 @@ MonoBehaviour:
   balizas:
   - {fileID: 0}
   - {fileID: 0}
+  - {fileID: 0}
+  mask:
+    serializedVersion: 2
+    m_Bits: 8
 --- !u!61 &5006427765189215516
 BoxCollider2D:
   m_ObjectHideFlags: 0

@@ -53,7 +53,7 @@ public class Player : MonoBehaviour
     void Movement()
     {
         movX = Input.GetAxisRaw("Horizontal");
-        mov = new Vector2(movX, 0) * (speed + 3) * Time.deltaTime;
+        mov = new Vector2(movX, 0) * (speed) * Time.deltaTime;
         transform.Translate(mov);
         if (movX < 0)
         {
