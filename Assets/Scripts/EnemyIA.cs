@@ -5,10 +5,10 @@ using UnityEngine;
 public class EnemyIA : MonoBehaviour
 {
     Player player;
-    float speed = 4.5f;
+    float speed = 7f;
     float fov = 10;
     int health;
-    public Transform[] balizas = new Transform[2];
+    public Transform[] balizas;
     SpriteRenderer spriteRenderer;
     bool canMove = false;
     bool moveafterjump = true;
@@ -87,9 +87,10 @@ public class EnemyIA : MonoBehaviour
 
             
 
-            var disp = Mathf.Abs(this.transform.position.x - balizas[i].transform.position.x);
+            var disp = (this.transform.position.x - balizas[i].transform.position.x);
+            
             var deltah = this.transform.GetChild(1).transform.position.y - (balizas[i].position.y+0.45f);
-            Debug.Log(deltah + " :delta y");
+            //Debug.Log(deltah + " :delta y");
             if (Mathf.Abs(deltah) > 0.5 && canJump == true )
             {
                 //Damage(9999);
@@ -109,18 +110,19 @@ public class EnemyIA : MonoBehaviour
             if (canMove == true )
             {
 
-                if (i == 0)
+                if (disp <1)
                 {
                     spriteRenderer.flipX = true;
                 }
-                else if (i == 1)
+                else if (disp >1)
                 {
                     spriteRenderer.flipX = false;
                 }
                 if (moveafterjump == true) { this.transform.position = Vector2.MoveTowards(this.transform.position, new Vector2(balizas[i].transform.position.x, this.transform.position.y), 0.01f); }
-                if (disp < 1)
+                if (Mathf.Abs(disp) < 1  )//Mathf.Abs(deltah)<0.1
                 {
                     Debug.Log("arrive");
+                    
                     i++;
                     canMove = false;
                     StartCoroutine(BalizeCoolDownCoRoutine(Random.Range(1, 4)));

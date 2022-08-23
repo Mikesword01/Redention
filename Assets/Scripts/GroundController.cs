@@ -25,13 +25,15 @@ public class GroundController : MonoBehaviour
         }
         if (dis > 0)
         {
-            boxcollider.enabled = false;
+            //Physics2D.IgnoreLayerCollision(7,8,true);
+            //boxcollider.enabled = false;
             //Debug.Log(dis + "Changed");
 
         }
         else if (dis < 0)
-        { 
-            boxcollider.enabled = true;
+        {
+            //Physics2D.IgnoreLayerCollision(7, 8,false);
+            //boxcollider.enabled = true;
         }
     }
 }
