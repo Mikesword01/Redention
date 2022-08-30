@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class Player : MonoBehaviour
 {
     float movX;
@@ -23,6 +24,7 @@ public class Player : MonoBehaviour
     Animator anim;
     int health;
     bool death = false; 
+    public EquipedWeapon weapon;
     void Start()
     {
         Physics2D.IgnoreLayerCollision(8, 6, true);
@@ -112,6 +114,15 @@ public class Player : MonoBehaviour
     {
         if (Input.GetMouseButton(0) && canShoot == true)
         {
+
+            switch (weapon)
+            {
+                default:
+                    break;
+                case EquipedWeapon.Sword:
+                        break;
+
+            }
             //Debug.Log("Shoot");
             canShoot = false;
             GameObject bulletobj;
@@ -198,4 +209,12 @@ public class Player : MonoBehaviour
         cantakedamage = true;
     }
     #endregion
+    public enum EquipedWeapon
+    {
+        Sword = 1,
+        Pistol =2,
+        Rifle =3
+
+
+    }
 }
